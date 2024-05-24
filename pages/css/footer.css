@@ -1,0 +1,28 @@
+footer {
+  height: 10%;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+}
+
+.companyWrapper,
+.supportWrapper,
+.creditsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: small;
+}
+
+.companyWrapper img,
+.supportWrapper img,
+.creditsWrapper img {
+  width: 30px;
+}
+
+.website {
+  text-decoration: none;
+  color: white;
+}
