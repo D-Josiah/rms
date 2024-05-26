@@ -22,11 +22,12 @@ header img {
   width: 70px;
 }
 main {
-  height: 80%;
-  padding-top: 2%;
-  padding-left: 5%;
-  padding-right: 5%;
-}
+    height: 80%;
+    padding-top: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
 
 .backBtnWrapper {
   display: flex;
@@ -42,45 +43,52 @@ form {
 }
 
 form input {
-  width: 300px;
-  height: 30px;
+  width: 400px;
+  height: 40px;
   background-color: lightgrey;
   border-style: none;
   border-radius: 50px;
 }
+
 .left,
 .right {
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
-}
-
-.personalInfo,
-.contactInfo,
-.address {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.profilePic {
-  background-color: white;
-}
 
-.submitWrapper {
-  display: flex;
-  justify-content: end;
-}
 .submit {
-  margin-top: 20px;
-  width: 150px;
-  background-color: black;
-  color: white;
-  font-size: large;
+    margin-top: 20px;
+    width: 150px;
+    background-color: black;
+    color: white;
+    font-size: large;
+  }
+  
+  .submit:hover {
+    font-size: larger;
+    background-color: gray;
+    border-style: none;
+  }
+  
+
+.priceWrapper {
+  display: flex;
+  gap: 10px;
+  width: 400px;
 }
 
-.submit:hover {
-  font-size: larger;
-  background-color: gray;
-  border-style: none;
+.priceWrapper input {
+  width: 50%;
 }
+
+.productImg {
+  background-color: white;
+  border-radius: 0;
+}
+textarea {
+  width: 400px;
+  height: 100px;
+}
+
