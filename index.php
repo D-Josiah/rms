@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pages/css/footer.css"/>
+    <link rel="stylesheet" href="style.css"/>
     
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <img src="images/logo.png">
+        <h1>AquaFlask</h1>
+    </header>   
     <main>
-    <a href="pages/registration.php">GO TO ADD RESELLER PAGE</a><!--TEMPORARY-->
+        <div class="left">
+            <h1>RESELLER MANAGEMENT SYSTEM</h1>
+            <form>
+                <input type="text" name="username" placeholder="  Username">
+                <input type="password" name="password" placeholder="  Password" class="password">
+                <input type="submit" name="login" value="LOGIN" class="login">
+            </form>
+        </div>
+        <div class="right"></div>
     </main>
-
+    
     <footer>
         <div class="companyWrapper">
             <img src="images/logo.png" />
@@ -37,5 +49,6 @@
             </div>
         </div>
     </footer>
+    <img src="images/heroImg.png" class="hero">
 </body>
 </html>

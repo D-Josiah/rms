@@ -3,6 +3,8 @@
 
     <title>Reseller Info</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pages/css/footer.css"/>
+    
 </head>
 <body>
     <header>

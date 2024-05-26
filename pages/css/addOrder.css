@@ -42,35 +42,20 @@ form {
 }
 
 form input {
-  width: 300px;
-  height: 30px;
+  width: 400px;
+  height: 40px;
   background-color: lightgrey;
   border-style: none;
   border-radius: 50px;
 }
+
 .left,
 .right {
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
-}
-
-.personalInfo,
-.contactInfo,
-.address {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.profilePic {
-  background-color: white;
-}
-
-.submitWrapper {
-  display: flex;
-  justify-content: end;
-}
 .submit {
   margin-top: 20px;
   width: 150px;
@@ -84,3 +69,38 @@ form input {
   background-color: gray;
   border-style: none;
 }
+
+textarea {
+  width: 400px;
+  height: 100px;
+}
+
+/** difference starts here**/
+.orderList {
+  overflow: auto;
+}
+.orderWrapper input {
+  width: 33%;
+}
+.orderWrapper {
+  display: flex;
+  gap: 1%;
+}
+
+.addWrapper {
+  display: flex;
+  justify-content: end;
+}
+
+select {
+  width: 200px;
+  height: 40px;
+  background-color: lightgray;
+  border-radius: 50px;
+  border-style: none;
+}
+
+.add {
+  width: 30px;
+}
+
