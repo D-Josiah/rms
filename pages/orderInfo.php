@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/addOrder.css"/>
+    <link rel="stylesheet" href="css/orderInfo.css"/>
     <link rel="stylesheet" href="css/footer.css"/>
-    <title>ADD ORDER</title>
+    <title>ORDER INFO</title>
 </head>
 <body>
     <header>
         <img src="../images/order.png">
-        <h1>ADD ORDER</h1>
+        <h1>ORDER INFO</h1>
     </header> 
+    <nav>
+        <ul>
+            <li><a href="resellerList.php">Reseller List</a></li>
+            <li><a href="productList.php">Product List</a></li>
+            <li><a href="orderList.php">Order List</a></li>
+        </ul>
+    </nav>
     <main>
         <div class="backBtnWrapper">
             <a href="../productList.php"><img src="../images/back.png" class="backBtn" /></a>
@@ -19,10 +26,12 @@
         <form>
             <div class="left">
                 <h3>Delivery Information</h3>
-                <input name="name" type="text" placeholder="  Reseller Name" />
-      
-                <input name="receiver" type="text" placeholder="  Receiver's Name" />
-                <input name="phoneNumber" type="tel" placeholder="  Receiver's Phone Number" />
+                <label for="name">Reseller Name</label>
+                <input name="name" type="text" />
+                <label for="receiver">Receiver's Name</label>
+                <input name="receiver" type="text"  />
+                <label for="phoneNumber">Receiver's Phone Number</label>
+                <input name="phoneNumber" type="tel"/>
                 <select id="payment-method" name="payment_method" required>
                     <option value="">MODE OF PAYMENT</option>
                     <option value=1>Cash</option>
@@ -37,7 +46,7 @@
             </div>
             <div class="right">
                 <h3>Order Information</h3>
-                
+
                 <table class="orderList" >
                     <thead>
                         <tr>
@@ -58,7 +67,11 @@
                             <td> P12022</td>
                         </tr>
                     </tbody>
-                </table> 
+                </table>  
+            
+                <div class="addWrapper">
+                    <img src="../images/add.png" class="add">
+                </div>
                 
                 <h3>Order Total: </h3>
                 <h3>Status: </h3>
@@ -66,7 +79,6 @@
             </div>
         </form>
     </main>
-
     <?php include 'footer.html'; ?>
 </body>
 </html>
