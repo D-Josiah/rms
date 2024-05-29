@@ -37,9 +37,9 @@ CREATE TABLE `active_status` (
 --
 
 INSERT INTO `active_status` (`active_status_id`, `type`) VALUES
-(1, 'active'),
-(2, 'inactive'),
-(3, 'suspended');
+(1, 'ACTIVE'),
+(2, 'INACTIVE'),
+(3, 'SUSPENDED');
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `name`, `email`, `username`, `password`) VALUES
-(1, 'Juan Santos', 'js@gmail.com', 'juan', 'f6ccb3e8d609012238c0b39e60b2c9632b3cdede91e035dad1de43469768f4cc');
+(1, 'Juan Santos', 'js@gmail.com', 'juan', '12345');
 
 -- --------------------------------------------------------
 
@@ -91,9 +91,9 @@ CREATE TABLE `availability` (
 --
 
 INSERT INTO `availability` (`availability_id`, `type`) VALUES
-(1, 'available'),
-(2, 'limited stock'),
-(3, 'out of stock');
+(1, 'AVAILABLE'),
+(2, 'LIMITED STOCK'),
+(3, 'OUT OF STOCK');
 
 -- --------------------------------------------------------
 
@@ -141,10 +141,10 @@ CREATE TABLE `order_status` (
 --
 
 INSERT INTO `order_status` (`orderStatus_id`, `type`) VALUES
-(1, 'completed'),
-(2, 'pending approval'),
-(3, 'to be shipped'),
-(4, 'cancelled');
+(1, 'COMPLETED'),
+(2, 'PENDING APPROVAL'),
+(3, 'TO BE SHIPPED'),
+(4, 'CANCELLED');
 
 -- --------------------------------------------------------
 
@@ -178,7 +178,8 @@ CREATE TABLE `product` (
   `stock` int(11) NOT NULL,
   `image` blob DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `availability` int(11) GENERATED ALWAYS AS (case when `stock` > 10 then 1 when `stock` between 1 and 10 then 2 else 3 end) STORED
+  `availability` int(11) GENERATED ALWAYS AS (case when `stock` > 10 then 1 
+  when `stock` between 1 and 10 then 2 else 3 end) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -261,7 +262,6 @@ CREATE TABLE `reseller` (
   `name` varchar(70) NOT NULL,
   `email` varchar(40) NOT NULL,
   `phone_number` int(11) NOT NULL,
-  `reseller_photo` blob DEFAULT NULL,
   `active_status` int(11) DEFAULT NULL,
   `join_date` date NOT NULL,
   `address` int(11) DEFAULT NULL
@@ -298,9 +298,8 @@ ALTER TABLE `active_status`
 
 --
 -- Indexes for table `address`
---
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`address_id`),
+  MODIFY COLUMN `address_id` INT AUTO_INCREMENT PRIMARY KEY,
   ADD KEY `region_id` (`region_id`);
 
 --

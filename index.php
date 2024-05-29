@@ -20,25 +20,7 @@
                 <input type="password" name="password" placeholder="  Password" class="password">
                 <input type="submit" name="login" value="LOGIN" class="login">
             </form>
-            <?php
-                include 'connector.php';
-                session_start();
-
-                if(isset($_POST["login"])){
-                    $username = htmlspecialchars($_POST["username"]); 
-                    $password = htmlspecialchars($_POST["password"]);
-                    
-                    $sql = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
-                    $result = $conn->query($sql);
-                    
-                    if($result -> num_rows == 1){
-                        header("Location: pages/resellerList.php");
-                    } else {
-                        echo '<script>alert("Invalid username or password.");</script>';
-                    }
-                }
-                $conn->close();
-            ?>
+          
         </div>
         <div class="right"></div>
     </main>
@@ -72,4 +54,25 @@
 </body>
 </html>
 
+<?php
+    include 'connector.php';
+    session_start();
+
+    if(isset($_POST["login"])){
+        $username = htmlspecialchars($_POST["username"]); 
+        $password = htmlspecialchars($_POST["password"]);
+        
+        $sql = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
+        $result = $conn->query($sql);
+        
+        if($result -> num_rows == 1){
+            $row = $result->fetch_assoc();
+            $_SESSION['admin_id'] = $row['admin_id'];
+            header("Location: pages/resellerList.php");
+        } else {
+            echo '<script>alert("Invalid username or password.");</script>';
+        }
+    }
+    $conn->close();
+?>
 

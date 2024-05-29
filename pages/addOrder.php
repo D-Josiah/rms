@@ -16,7 +16,7 @@
         <div class="backBtnWrapper">
             <a href="../productList.php"><img src="../images/back.png" class="backBtn" /></a>
         </div>
-        <form>
+        <form action="addOrder.php" method="post" >
             <div class="left">
                 <h3>Delivery Information</h3>
                 <input name="name" type="text" placeholder="  Reseller Name" />
@@ -31,7 +31,7 @@
                     <option value=4>Pending</option>
                 </select>  
                 <h3>Delivery Information</h3>
-                <textarea>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae debitis possimus nostrum voluptate voluptas labore totam qui dolorem nemo. Perferendis recusandae facilis, iste deleniti deserunt excepturi doloribus ea ipsa illum!</textarea>
+                <textarea name="delivery_info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae debitis possimus nostrum voluptate voluptas labore totam qui dolorem nemo. Perferendis recusandae facilis, iste deleniti deserunt excepturi doloribus ea ipsa illum!</textarea>
                  
    
             </div>
@@ -43,26 +43,26 @@
                         <tr>
                             <th>Product ID</th>
                             <th>Quantity</th>
-                            <th>Total</th>
+                        
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1123</td>
-                            <td>24</td>
-                            <td> P12022</td>
-                        </tr>
-                        <tr>
-                            <td>1123</td>
-                            <td>24</td>
-                            <td> P12022</td>
-                        </tr>
+                    <tr  class ="product_details" >
+                        <td><input class ="product_details" type="text" name="id[]" ></td>
+                        <td><input  class ="product_details" type="text" name="quantity[]" ></td>
+                       
+                    </tr>
+                    <tr>
+                        <td><input  class ="product_details" type="text" name="product_id[]"></td>
+                        <td><input class ="product_details"  type="text" name="quantity[]" ></td>
+                     
+                    </tr>
                     </tbody>
                 </table> 
                 
                 <h3>Order Total: </h3>
                 <h3>Status: </h3>
-                <input type="submit" class="submit" value="SUBMIT">
+                <input name="submit" type="submit" class="submit" value="SUBMIT">
             </div>
         </form>
     </main>
@@ -70,3 +70,78 @@
     <?php include 'footer.html'; ?>
 </body>
 </html>
+
+<?php
+include '../connector.php';
+session_start();
+
+if(isset($_POST["submit"])){
+    $name = htmlspecialchars($_POST["name"]); 
+    $receiver = htmlspecialchars($_POST["receiver"]);
+    $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
+    $payment_method = htmlspecialchars($_POST["payment_method"]);
+    $delivery_info = htmlspecialchars($_POST["delivery_info"]);
+
+    $product_ids = $_POST['product_id'];
+    $quantities = $_POST['quantity'];
+
+    $reseller_id = null;
+    $total_price = 0;
+
+    // Get reseller ID
+    $get_id_sql = "SELECT reseller_id FROM reseller WHERE name = '$name'";
+    $result = $conn->query($get_id_sql);
+    if($result->num_rows > 1){
+        $row = $result->fetch_assoc();
+        $reseller_id = $row['reseller_id'];
+    } else {
+        echo 'Error finding the reseller';
+        exit();
+    }
+
+    // Insert order
+    $insert_order_sql = "INSERT INTO orders (reseller_id, payment_method, order_status, 
+                                    receiver, phone_number, delivery_info, total_price, date)
+                          VALUES ('$reseller_id', '$payment_method', 2, '$receiver', '$phoneNumber',
+                          '$delivery_info', $total_price, NOW())";
+    if ($conn->query($insert_order_sql) === TRUE) {
+        $order_id = $conn->insert_id;
+
+        // Insert order details
+        foreach ($product_ids as $index => $product_id) {
+            $quantity = $quantities[$index];
+            $insert_product_sql = "INSERT INTO order_details (order_id, quantity, product_id)
+                            VALUES ('$order_id', '$quantity', '$product_id')";
+            if (!$conn->query($insert_product_sql)) {
+                echo "Error recording order details: " . $conn->error;
+                exit();
+            }
+        }
+
+        // Calculate and update total price
+        $get_total_sql = "SELECT SUM(quantity * price) AS total_price
+                          FROM order_details
+                          JOIN product ON order_details.product_id = product.product_id
+                          WHERE order_details.order_id = '$order_id'";
+        $total_price_result = $conn->query($get_total_sql);
+        if($total_price_result->num_rows == 1){
+            $row_result = $total_price_result->fetch_assoc();
+            $total_price = $row_result['total_price'];
+
+            $update_total_sql = "UPDATE orders SET total_price = '$total_price' WHERE order_id = '$order_id'";
+            if ($conn->query($update_total_sql) === TRUE) {
+                header("Location: orderList.php");
+                exit();
+            } else {
+                echo 'Error updating total price: ' . $conn->error;
+            }
+        } else {
+            echo 'Error calculating total price';
+        }
+    } else {
+        echo "Error adding the order: " . $conn->error;
+    }
+
+    $conn->close();
+}
+?>

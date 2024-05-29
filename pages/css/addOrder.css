@@ -83,11 +83,17 @@ table {
 td {
   height: 30px;
   background-color: lightgray;
+
   width: 170px;
   text-align: center;
   font-size: large;
   border-radius: 10px;
 }
+
+.product_details {
+  width: 170px;
+}
+
 .addWrapper {
   display: flex;
   justify-content: end;
