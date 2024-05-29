@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"/>
     
-    <title>Document</title>
+    <title>LOGIN</title>
 </head>
 <body>
     <header>
@@ -15,11 +15,30 @@
     <main>
         <div class="left">
             <h1>RESELLER MANAGEMENT SYSTEM</h1>
-            <form>
+            <form action="index.php" method="post" >
                 <input type="text" name="username" placeholder="  Username">
                 <input type="password" name="password" placeholder="  Password" class="password">
                 <input type="submit" name="login" value="LOGIN" class="login">
             </form>
+            <?php
+                include 'connector.php';
+                session_start();
+
+                if(isset($_POST["login"])){
+                    $username = htmlspecialchars($_POST["username"]); 
+                    $password = htmlspecialchars($_POST["password"]);
+                    
+                    $sql = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
+                    $result = $conn->query($sql);
+                    
+                    if($result -> num_rows == 1){
+                        header("Location: pages/resellerList.php");
+                    } else {
+                        echo '<script>alert("Invalid username or password.");</script>';
+                    }
+                }
+                $conn->close();
+            ?>
         </div>
         <div class="right"></div>
     </main>
@@ -52,3 +71,5 @@
     <img src="images/heroImg.png" class="hero">
 </body>
 </html>
+
+
