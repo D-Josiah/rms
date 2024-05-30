@@ -67,7 +67,7 @@ if(isset($_POST["submit"])){
                                 VALUES (NOW(), '{$_SESSION['admin_id']}', '$product_id', 1)";
 
         if ($conn->query($insert_record_sql) === TRUE) {
-            header("Location: productList.php");
+            header("Location: ../productList.php");
             exit();
         } else {
             echo "Error inserting record: " . $conn->error;

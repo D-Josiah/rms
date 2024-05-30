@@ -102,7 +102,7 @@ if(isset($_POST["register"])){
                                    VALUES (NOW(), '{$_SESSION['admin_id']}', '$reseller_id', 1)";
 
             if ($conn->query($insert_manages_sql) === TRUE) {
-                header("Location: resellerList.php");
+                header("Location: ../resellerList.php");
                 exit();
             } else {
                 echo "Error recording relationship: " . $conn->error; 

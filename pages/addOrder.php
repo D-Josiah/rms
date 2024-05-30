@@ -19,7 +19,7 @@
         <form action="addOrder.php" method="post" >
             <div class="left">
                 <h3>Delivery Information</h3>
-                <input name="reseller_id" type="text" placeholder="  Reseller ID" />
+                <input name="reseller_name" type="text" placeholder="  Reseller Name" />
       
                 <input name="receiver" type="text" placeholder="  Receiver's Name" />
                 <input name="phoneNumber" type="tel" placeholder="  Receiver's Phone Number" />
@@ -74,7 +74,7 @@ include '../connector.php';
 session_start();
 
 if(isset($_POST["submit"])){
-    $reseller_id = htmlspecialchars($_POST["reseller_id"]); 
+    $reseller_name = htmlspecialchars($_POST["reseller_name"]); 
     $receiver = htmlspecialchars($_POST["receiver"]);
     $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
     $payment_method = htmlspecialchars($_POST["payment_method"]);
@@ -83,19 +83,19 @@ if(isset($_POST["submit"])){
     $product_ids = $_POST['product_id'];
     $quantities = $_POST['quantity'];
 
-    //$reseller_id = null;
+    $reseller_id = null;
     $total_price = 0;
 
-    // // Get reseller ID
-    // $get_id_sql = "SELECT reseller_id FROM reseller WHERE name = '$name'";
-    // $result = $conn->query($get_id_sql);
-    // if($result->num_rows > 1){
-    //     $row = $result->fetch_assoc();
-    //     $reseller_id = $row['reseller_id'];
-    // } else {
-    //     echo 'Error finding the reseller';
-    //     exit();
-    // }
+    // Get reseller ID
+    $get_id_sql = "SELECT reseller_id FROM reseller WHERE name = '$reseller_name'";
+    $result = $conn->query($get_id_sql);
+    if($result->num_rows > 1){
+         $row = $result->fetch_assoc();
+        $reseller_id = $row['reseller_id'];
+     } else {
+        echo 'Error finding the reseller';
+        exit();
+     }
 
     // Insert order
     $insert_order_sql = "INSERT INTO orders (reseller_id, payment_method, order_status, 
@@ -128,7 +128,7 @@ if(isset($_POST["submit"])){
 
             $update_total_sql = "UPDATE orders SET total_price = '$total_price' WHERE order_id = '$order_id'";
             if ($conn->query($update_total_sql) === TRUE) {
-                header("Location: orderList.php");
+                header("Location: ../orderList.php");
                 exit();
             } else {
                 echo 'Error updating total price: ' . $conn->error;
