@@ -6,7 +6,7 @@
 </head>
 <header>
     <div class="header-content">
-        <img src="persons2.png" alt="persons" class="persons">
+        <img src="/images/persons2.png" alt="persons" class="persons">
         <h1>Admin Dashboard</h1>
 
     </div>

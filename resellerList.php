@@ -1,65 +1,65 @@
 <?php
 include 'connector.php';
 
-// SQL query to select reseller data
-$sql = "SELECT r.reseller_id, r.name, r.reseller_photo, a.type AS status
-        FROM reseller r
-        JOIN active_status a ON r.active_status = a.active_status_id";
+// Capture the filter value if set
+$filter = isset($_GET['status']) ? $_GET['status'] : '';
 
-// Execute the query
-$result = $conn->query($sql);
+// Modify the SQL query based on the filter
+$sql = "SELECT p.product_id, p.stock, p.price, p.description, p.image, a.type AS availability
+        FROM product p
+        JOIN availability a ON p.availability = a.availability_id";
 
-if (!$result) {
-    die("Query failed: " . $conn->error);
+if ($filter) {
+    $sql .= " WHERE a.type = '$filter'";
 }
+
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <link rel="stylesheet" href="style.css">
-    <title>Reseller List</title>
-    <script>
-        // Function to apply filters based on status filter
-        function applyFilters() {
-            var statusFilter, table, tr, td, i;
+    <title>Product List</title>
+</head>
+<script>
+function applyFilters() {
+    var statusFilter, table, tr, td, i;
 
-            // Get the status filter value, converted to uppercase
-            statusFilter = document.getElementById("statusFilter").value.toUpperCase();
+    // Get the status filter value, converted to uppercase
+    statusFilter = document.getElementById("statusFilter").value.toUpperCase();
 
-            // Get the reseller list table and its rows
-            table = document.getElementsByClassName("reseller-list")[0];
-            tr = table.getElementsByClassName("reseller-item");
+    // Get the product list table and its rows
+    table = document.getElementsByClassName("product-list")[0];
+    tr = table.getElementsByClassName("product-card");
 
-            // Loop through all table rows (resellers)
-            for (i = 0; i < tr.length; i++) {
-                // Get the reseller info cell in the current row
-                td = tr[i].getElementsByClassName("reseller-info")[0];
-                if (td) {
-                    // Get the status element within the reseller info cell
-                    var status = td.getElementsByTagName("p")[2];
+    // Loop through all table rows (products)
+    for (i = 0; i < tr.length; i++) {
+        // Get the product info cell in the current row
+        td = tr[i].getElementsByClassName("product-info")[0];
+        if (td) {
+            // Get the availability element within the product info cell
+            var availability = td.getElementsByClassName("details availability")[0];
 
-                    // Check if the reseller matches the status filter
-                    if (status.textContent.toUpperCase().indexOf(statusFilter) > -1 || statusFilter === "") {
-                        // If matches, display the row
-                        tr[i].style.display = "";
-                    } else {
-                        // If not matches, hide the row
-                        tr[i].style.display = "none";
-                    }
-                }
+            // Check if the product matches the status filter
+            if (availability.textContent.toUpperCase().indexOf(statusFilter) > -1 || statusFilter === "") {
+                // If matches, display the row
+                tr[i].style.display = "";
+            } else {
+                // If not matches, hide the row
+                tr[i].style.display = "none";
             }
         }
-    </script>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <img src="persons.png" alt="persons" class="persons">
-            <h1>Admin Dashboard</h1>
-        </div>
-    </header>
+    }
+}
 
+</script>
+<header>
+    <div class="header-content">
+        <img src="persons.png" alt="persons" class="persons">
+        <h1>Admin Dashboard</h1>
+    </div>
+</header>
+<body>
     <nav>
         <ul>
             <li><a href="resellerList.php">Reseller List</a></li>
@@ -69,35 +69,41 @@ if (!$result) {
     </nav>
 
     <div class="search-filter-container">
-        <select id="statusFilter" onchange="applyFilters()">
+        <select id="statusFilter">
             <option value="">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-            <option value="suspended">Suspended</option>
+            <option value="available">Available</option>
+            <option value="limited stock">Limited Stock</option>
+            <option value="out of stock">Out of Stock</option>
         </select>
-        <a href="http://localhost/rms/pages/registration.php"><button class="add-button">Add</button></a>
+        <button onclick="applyFilters()" class="apply-button">Apply</button>
+        <button class="add-button">Add</button>
     </div>
 
     <main>
-        <h2>Reseller List</h2>
-        <div class="reseller-list">
+        <h2>Product List</h2>
+        <div class="product-list">
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
-                    echo "<div class='reseller-item'>
-                        <div class='reseller-photo'>
-                        <img src='reseller_icon.png' alt='Reseller Photo'>
-                        </div>
-                            <div class='reseller-info'>
-                                <p><strong>ID:</strong> {$row['reseller_id']}</p>
-                                <p><strong>Name:</strong> {$row['name']}</p>
-                                <p><strong>Status:</strong> {$row['status']}</p>
-                                <a href='resellerInfo.php?reseller_id={$row['reseller_id']}&name={$row['name']}&status={$row['status']}' class='view-details-link'>View Details</a>
+                    $productId = $row['product_id'];
+                    $productName = $row['description'];
+                    $productStatus = $row['availability'];
+                    $imageBlob = $row['image'];
+                    $base64Image = base64_encode($imageBlob);
+                    echo "<div class='product-card'>
+                            <img src='{$base64Image}' alt='Product Image' class='product-image'>
+                            <div class='product-info'>
+                                <h3>Product ID: {$productId}</h3>
+                                <p>Name: {$productName}</p>
+                                <p class='details price'>Price: $ {$row['price']}</p>
+                                <p class='details quantity'>Quantity: {$row['stock']}</p>
+                                <p class='details availability'>Availability: {$productStatus}</p>
+                                <a href='productInfo.php?product_id={$productId}' class='view-details-link'>View Details</a>
                                 </div>
-                        </div>";
-                }
+                            </div>";
+                    }
             } else {
-                echo "<p>No resellers found</p>";
+                echo "<p>No products found</p>";
             }
             $conn->close();
             ?>
