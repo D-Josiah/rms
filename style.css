@@ -97,6 +97,7 @@ nav ul li a:hover {
     border: none;
 }
 
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -318,6 +319,32 @@ button.add-button:hover {
     color: #333;
 }
 
+/* update product */
+.message-container {
+    margin-top: 20px; 
+}
+
+.success-message, .error-message {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.success-message {
+    background-color: #DFF2BF; /* Light green */
+    color: #4F8A10; /* Dark green */
+}
+
+.error-message {
+    background-color: #F2DEDE; /* Light red */
+    color: #A94442; /* Dark red */
+}
+
+.button-container {
+    margin-top: 10px; 
+}
+
+/* Done */
 .view-details-link {
     display: inline-block;
     background-color: black;
@@ -378,6 +405,11 @@ button.add-button:hover {
 .product-info .details {
     font-size: 12px;
     opacity: 0.8;
+}
+
+.product-image {
+    width: 200px;
+    height: auto;
 }
 
 
