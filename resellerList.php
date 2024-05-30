@@ -5,7 +5,7 @@ include 'connector.php';
 $filter = isset($_GET['status']) ? $_GET['status'] : '';
 
 // Modify the SQL query based on the filter
-$sql = "SELECT p.product_id, p.stock, p.price, p.description, p.image, a.type AS availability
+$sql = "SELECT p.product_id, p.stock, p.price, p.name, p.image, a.type AS availability
         FROM product p
         JOIN availability a ON p.availability = a.availability_id";
 
@@ -86,7 +86,7 @@ function applyFilters() {
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     $productId = $row['product_id'];
-                    $productName = $row['description'];
+                    $productName = $row['name'];
                     $productStatus = $row['availability'];
                     $imageBlob = $row['image'];
                     $base64Image = base64_encode($imageBlob);
