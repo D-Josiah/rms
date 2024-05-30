@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <img src="../images/order.png">
+    <a href="registration.php"><img src="../images/order.png"><a>
         <h1>ADD ORDER</h1>
     </header> 
     <main>
@@ -19,7 +19,7 @@
         <form action="addOrder.php" method="post" >
             <div class="left">
                 <h3>Delivery Information</h3>
-                <input name="name" type="text" placeholder="  Reseller Name" />
+                <input name="reseller_id" type="text" placeholder="  Reseller ID" />
       
                 <input name="receiver" type="text" placeholder="  Receiver's Name" />
                 <input name="phoneNumber" type="tel" placeholder="  Receiver's Phone Number" />
@@ -60,8 +60,6 @@
                     </tbody>
                 </table> 
                 
-                <h3>Order Total: </h3>
-                <h3>Status: </h3>
                 <input name="submit" type="submit" class="submit" value="SUBMIT">
             </div>
         </form>
@@ -76,7 +74,7 @@ include '../connector.php';
 session_start();
 
 if(isset($_POST["submit"])){
-    $name = htmlspecialchars($_POST["name"]); 
+    $reseller_id = htmlspecialchars($_POST["reseller_id"]); 
     $receiver = htmlspecialchars($_POST["receiver"]);
     $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
     $payment_method = htmlspecialchars($_POST["payment_method"]);
@@ -85,19 +83,19 @@ if(isset($_POST["submit"])){
     $product_ids = $_POST['product_id'];
     $quantities = $_POST['quantity'];
 
-    $reseller_id = null;
+    //$reseller_id = null;
     $total_price = 0;
 
-    // Get reseller ID
-    $get_id_sql = "SELECT reseller_id FROM reseller WHERE name = '$name'";
-    $result = $conn->query($get_id_sql);
-    if($result->num_rows > 1){
-        $row = $result->fetch_assoc();
-        $reseller_id = $row['reseller_id'];
-    } else {
-        echo 'Error finding the reseller';
-        exit();
-    }
+    // // Get reseller ID
+    // $get_id_sql = "SELECT reseller_id FROM reseller WHERE name = '$name'";
+    // $result = $conn->query($get_id_sql);
+    // if($result->num_rows > 1){
+    //     $row = $result->fetch_assoc();
+    //     $reseller_id = $row['reseller_id'];
+    // } else {
+    //     echo 'Error finding the reseller';
+    //     exit();
+    // }
 
     // Insert order
     $insert_order_sql = "INSERT INTO orders (reseller_id, payment_method, order_status, 

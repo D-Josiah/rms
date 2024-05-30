@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <img src="../images/product.png">
+        <a href="registration.php"><img src="../images/product.png"><a>
         <h1>ADD PRODUCT</h1>
     </header> 
     <main>

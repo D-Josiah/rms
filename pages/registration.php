@@ -16,7 +16,7 @@
     </header>
     <main>
       <div class="backBtnWrapper">
-        <a href="../index.php"><img src="../images/back.png" class="backBtn" /></a>
+        <a href="http://localhost/rms/resellerList.php"><img src="../images/back.png" class="backBtn" /></a>
       </div>
       <form class="infoWrapper" action="registration.php" method="post" >
         <div class="left">
@@ -57,13 +57,7 @@
 
             <input name="province" type="text" placeholder="  Province" />
             <input name="postal" type="tel" placeholder="  Postal Code" />
-            <h3>PROFILE PICTURE</h3>
-            <input
-              type="file"
-              name="photo"
-              accept="image/*"
-        
-            />
+            
             <div class="submitWrapper">
               <input
                 name="register"

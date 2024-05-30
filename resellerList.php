@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'connector.php';
 
 // SQL query to select reseller data
 $sql = "SELECT r.reseller_id, r.name, r.reseller_photo, a.type AS status
@@ -75,7 +75,7 @@ if (!$result) {
             <option value="inactive">Inactive</option>
             <option value="suspended">Suspended</option>
         </select>
-        <button class="add-button">Add</button>
+        <a href="http://localhost/rms/pages/registration.php"><button class="add-button">Add</button></a>
     </div>
 
     <main>

@@ -1,11 +1,11 @@
 <?php
-include 'connect.php';
+include 'connector.php';
 
 // Capture the filter value if set
 $filter = isset($_GET['status']) ? $_GET['status'] : '';
 
 // Modify the SQL query based on the filter
-$sql = "SELECT p.product_id, p.stock, p.price, p.description, p.image, a.type AS availability
+$sql = "SELECT p.product_id, p.stock, p.price, p.name, p.image, a.type AS availability
         FROM product p
         JOIN availability a ON p.availability = a.availability_id";
 
@@ -76,7 +76,7 @@ function applyFilters() {
             <option value="out of stock">Out of Stock</option>
         </select>
         <button onclick="applyFilters()" class="apply-button">Apply</button>
-        <button class="add-button">Add</button>
+        <a href="http://localhost/rms/pages/addProduct.php"><button class="add-button">Add</button></a>
     </div>
 
     <main>
@@ -86,7 +86,7 @@ function applyFilters() {
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     $productId = $row['product_id'];
-                    $productName = $row['description'];
+                    $productName = $row['name'];
                     $productStatus = $row['availability'];
                     echo "<div class='product-card'>
                             <img src='{$row['image']}' alt='Product Image' class='product-image'>

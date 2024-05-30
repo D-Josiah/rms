@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'connector.php';
 
 $sql = "SELECT o.order_id, o.date, r.name AS reseller, os.type AS status, o.delivery_info, o.total_price, pm.type AS payment_method
         FROM orders o
@@ -74,7 +74,7 @@ if (!$result) {
             <option value="pending">Pending</option>
             <option value="to_be_shipped">To be shipped</option>
         </select>
-        <button class="add-button">Add</button>
+        <a href="http://localhost/rms/pages/addOrder.php"><button class="add-button">Add</button></a>
     </div>
 
     <main>

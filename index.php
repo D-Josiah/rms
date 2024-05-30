@@ -68,7 +68,7 @@
         if($result -> num_rows == 1){
             $row = $result->fetch_assoc();
             $_SESSION['admin_id'] = $row['admin_id'];
-            header("Location: pages/resellerList.php");
+            header("Location: resellerList.php");
         } else {
             echo '<script>alert("Invalid username or password.");</script>';
         }

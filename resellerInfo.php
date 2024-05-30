@@ -14,7 +14,7 @@
 
     <h1>RESELLER INFO</h1>
     <?php
-    include 'connect.php';
+    include 'connector.php';
 
     // Assuming reseller_id is passed via GET parameter
     $reseller_id = $_GET['reseller_id'];

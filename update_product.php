@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'connector.php';
 
 // Check if form data is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

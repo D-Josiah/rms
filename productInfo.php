@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'connector.php';
 
 // Retrieve product details based on the product ID
 if(isset($_GET['product_id'])) {
