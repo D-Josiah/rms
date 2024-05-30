@@ -8,22 +8,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_price = $_POST['product-price'];
     $stock = $_POST['stock'];
     $product_description = $_POST['product-description'];
-
+    $product_status = $_POST['product-status'];
+    
     // Check if a new image is uploaded
     if ($_FILES['product-photo']['error'] === 0) {
         // File upload successful, process the image
         $image = $_FILES['product-photo']['tmp_name'];
         $image_content = addslashes(file_get_contents($image));
 
-        // Update product information with new image
-        $sql = "UPDATE product SET price = ?, stock = ?, description = ?, image = ? WHERE product_id = ?";
+        // Update product information with new image and status
+        $sql = "UPDATE product SET price = ?, stock = ?, description = ?, image = ?, availability = ? WHERE product_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("dsssi", $product_price, $stock, $product_description, $image_content, $product_id);
+        $stmt->bind_param("dsssii", $product_price, $stock, $product_description, $image_content, $product_status, $product_id);
     } else {
-        // No new image uploaded, update product information without changing the image
-        $sql = "UPDATE product SET price = ?, stock = ?, description = ? WHERE product_id = ?";
+        // No new image uploaded, update product information without changing the image but with the status
+        $sql = "UPDATE product SET price = ?, stock = ?, description = ?, availability = ? WHERE product_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("dssi", $product_price, $stock, $product_description, $product_id);
+        $stmt->bind_param("dsssi", $product_price, $stock, $product_description, $product_status, $product_id);
     }
 
     // Execute the update query

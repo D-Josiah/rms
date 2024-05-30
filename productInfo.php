@@ -43,6 +43,13 @@ if(isset($_GET['product_id'])) {
                     <label for="stock">Quantity</label>
                     <input type="number" id="stock" name="stock" value="<?php echo $row['stock']; ?>" required>
 
+                    <label for="product-status">Status</label>
+                    <select id="product-status" name="product-status">
+                        <option value="available" <?php if ($row['availability'] == 'available') echo 'selected'; ?>>Available</option>
+                        <option value="limited stock" <?php if ($row['availability'] == 'limited stock') echo 'selected'; ?>>Limited Stock</option>
+                        <option value="out of stock" <?php if ($row['availability'] == 'out of stock') echo 'selected'; ?>>Out of Stock</option>
+                    </select>
+
                     <label for="product-photo">Change Photo</label>
                     <input type="file" id="product-photo" name="product-photo" accept="image/*">
 
@@ -64,6 +71,7 @@ if(isset($_GET['product_id'])) {
     <?php include 'footer.html'; ?>
 </body>
 </html>
+
 <?php
     } else {
         echo "No product found with ID: " . htmlspecialchars($product_id);

@@ -18,39 +18,47 @@ if (!$result) {
 <head>
     <link rel="stylesheet" href="style.css">
     <title>Order List</title>
-</head>
-<script>
-function applyFilters() {
-    console.log("Applying filters...");
-    var input, filter, table, tr, td, i, statusFilter;
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    statusFilter = document.getElementById("statusFilter").value.toUpperCase();
-    table = document.getElementsByClassName("order-list")[0];
-    tr = table.getElementsByClassName("order-item");
+    <script>
+        // Function to apply filters based on status filter
+        function applyFilters() {
+            var statusFilter, table, tr, td, i;
 
-    for (i = 0; i < tr.length; i++) {
-        var orderID = tr[i].getElementsByClassName("order-id")[0].innerText.toUpperCase();
-        var reseller = tr[i].getElementsByClassName("reseller")[0].innerText.toUpperCase();
-        var status = tr[i].getElementsByClassName("status")[0].innerText.toUpperCase();
+            // Get the status filter value, converted to uppercase
+            statusFilter = document.getElementById("statusFilter").value.toUpperCase();
 
-        if ((orderID.indexOf(filter) > -1 || reseller.indexOf(filter) > -1) &&
-            (status.indexOf(statusFilter) > -1 || statusFilter === "")) {
-            tr[i].style.display = "";
-        } else {
-            tr[i].style.display = "none";
+            // Get the order list table and its rows
+            table = document.getElementsByClassName("order-list")[0];
+            tr = table.getElementsByClassName("order-item");
+
+            // Loop through all table rows (orders)
+            for (i = 0; i < tr.length; i++) {
+                // Get the order info cell in the current row
+                td = tr[i].getElementsByClassName("order-info-left")[0];
+                if (td) {
+                    // Get the status element within the order info cell
+                    var status = td.getElementsByClassName("status")[0];
+
+                    // Check if the order matches the status filter
+                    if (status.textContent.toUpperCase().indexOf(statusFilter) > -1 || statusFilter === "") {
+                        // If matches, display the row
+                        tr[i].style.display = "";
+                    } else {
+                        // If not matches, hide the row
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
         }
-    }
-}
-</script>
-
-<header>
-    <div class="header-content">
-        <img src="persons.png" alt="persons" class="persons">
-        <h1>Admin Dashboard</h1>
-    </div>
-</header>
+    </script>
+</head>
 <body>
+    <header>
+        <div class="header-content">
+            <img src="persons.png" alt="persons" class="persons">
+            <h1>Admin Dashboard</h1>
+        </div>
+    </header>
+
     <nav>
         <ul>
             <li><a href="resellerList.php">Reseller List</a></li>
@@ -60,14 +68,12 @@ function applyFilters() {
     </nav>
 
     <div class="search-filter-container">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <select id="statusFilter">
+        <select id="statusFilter" onchange="applyFilters()">
             <option value="">All</option>
             <option value="complete">Complete</option>
             <option value="pending">Pending</option>
             <option value="to_be_shipped">To be shipped</option>
         </select>
-        <button onclick="applyFilters()" class="apply-button">Apply</button>
         <button class="add-button">Add</button>
     </div>
 
@@ -91,8 +97,7 @@ function applyFilters() {
                                 <p><strong>Date:</strong> {$row['date']}</p>
                                 <p><strong>Delivery Location:</strong> {$row['delivery_info']}</p>
                             </div>
-                        </div>
-                        <hr>";
+                        </div>";
                 }
             } else {
                 echo "<p>No orders found</p>";

@@ -23,9 +23,35 @@ $result = $conn->query($sql);
 </head>
 <script>
 function applyFilters() {
-    var statusFilter = document.getElementById("statusFilter").value;
-    window.location.href = "productList.php?status=" + statusFilter;
+    var statusFilter, table, tr, td, i;
+
+    // Get the status filter value, converted to uppercase
+    statusFilter = document.getElementById("statusFilter").value.toUpperCase();
+
+    // Get the product list table and its rows
+    table = document.getElementsByClassName("product-list")[0];
+    tr = table.getElementsByClassName("product-card");
+
+    // Loop through all table rows (products)
+    for (i = 0; i < tr.length; i++) {
+        // Get the product info cell in the current row
+        td = tr[i].getElementsByClassName("product-info")[0];
+        if (td) {
+            // Get the availability element within the product info cell
+            var availability = td.getElementsByClassName("details availability")[0];
+
+            // Check if the product matches the status filter
+            if (availability.textContent.toUpperCase().indexOf(statusFilter) > -1 || statusFilter === "") {
+                // If matches, display the row
+                tr[i].style.display = "";
+            } else {
+                // If not matches, hide the row
+                tr[i].style.display = "none";
+            }
+        }
+    }
 }
+
 </script>
 <header>
     <div class="header-content">
@@ -43,7 +69,6 @@ function applyFilters() {
     </nav>
 
     <div class="search-filter-container">
-        <input type="text" id="searchInput" placeholder="Search...">
         <select id="statusFilter">
             <option value="">All</option>
             <option value="available">Available</option>
