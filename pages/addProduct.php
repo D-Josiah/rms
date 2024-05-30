@@ -16,7 +16,7 @@
         <div class="backBtnWrapper">
             <a href="../productList.php"><img src="../images/back.png" class="backBtn" /></a>
         </div>
-        <form>
+        <form  action="addProduct.php" method="post" >
             <div class="left">
                 <h3>Product Information</h3>
                 <input name="name" type="text" placeholder="  Name" />
@@ -27,6 +27,7 @@
                 
                 <h3>Product Image</h3>
                 <input
+                name="product_photo"
                 type="file"
                 id="photoInput"
                 accept="image/*"
@@ -34,12 +35,47 @@
                 />
             </div>
             <div class="right">
-                <h3>Product Description</h3>
-                <textarea>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque quasi sed totam ipsum non ratione, accusantium aperiam commodi molestias natus beatae? Enim esse nam voluptatem, consequuntur rem itaque! Tempora, quis.</textarea>
-                <input type="submit" class="submit" value="ADD">
+            
+                <input name="submit" type="submit" class="submit" value="ADD">
             </div>
         </form>
     </main>
     <?php include 'footer.html'; ?>
 </body>
 </html>
+
+
+<?php
+include '../connector.php';
+session_start();
+
+if(isset($_POST["submit"])){
+    $name = htmlspecialchars($_POST["name"]); 
+    $price = htmlspecialchars($_POST["price"]);
+    $stock = htmlspecialchars($_POST["stock"]);
+    $photo = $_FILES["product_photo"];
+  
+
+    
+    $insert_product_sql = "INSERT INTO product (stock, image, price, name)
+                          VALUES ('$stock', '$photo', '$price','$name')";
+
+    if ($conn->query($insert_product_sql) === TRUE) {
+        $product_id = $conn->insert_id;
+
+        $insert_record_sql = "INSERT INTO records (date, admin_id, product_id, record_type)
+                                VALUES (NOW(), '{$_SESSION['admin_id']}', '$product_id', 1)";
+
+        if ($conn->query($insert_record_sql) === TRUE) {
+            header("Location: productList.php");
+            exit();
+        } else {
+            echo "Error inserting record: " . $conn->error;
+        }
+    } else {
+        echo "Error inserting product: " . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
