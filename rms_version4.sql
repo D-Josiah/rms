@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: May 26, 2024 at 11:34 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- Host: 127.0.0.1
+-- Generation Time: May 30, 2024 at 03:35 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -53,6 +53,14 @@ CREATE TABLE `address` (
   `province` varchar(100) NOT NULL,
   `postal_code` char(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`address_id`, `region_id`, `province`, `postal_code`) VALUES
+(1, 7, 'aklan', '5613'),
+(2, 6, 'iloilo', '5613');
 
 -- --------------------------------------------------------
 
@@ -109,6 +117,14 @@ CREATE TABLE `manages` (
   `transaction_type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `manages`
+--
+
+INSERT INTO `manages` (`manages_id`, `date`, `admin_id`, `reseller_id`, `transaction_type`) VALUES
+(1, '2024-05-30', 1, 1, 1),
+(2, '2024-05-30', 1, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -122,7 +138,9 @@ CREATE TABLE `orders` (
   `order_status` int(11) DEFAULT NULL,
   `delivery_info` varchar(100) NOT NULL,
   `total_price` decimal(10,2) DEFAULT NULL,
-  `payment_method` int(11) DEFAULT NULL
+  `payment_method` int(11) DEFAULT NULL,
+  `phone_number` int(11) DEFAULT NULL,
+  `receiver` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -178,9 +196,16 @@ CREATE TABLE `product` (
   `stock` int(11) NOT NULL,
   `image` blob DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `availability` int(11) GENERATED ALWAYS AS (case when `stock` > 10 then 1 
-  when `stock` between 1 and 10 then 2 else 3 end) STORED
+  `name` varchar(100) NOT NULL,
+  `availability` int(11) GENERATED ALWAYS AS (case when `stock` > 10 then 1 when `stock` between 1 and 10 then 2 else 3 end) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `stock`, `image`, `price`, `name`) VALUES
+(1, 200, '', 1000.00, '18 oz BLACK');
 
 -- --------------------------------------------------------
 
@@ -195,6 +220,13 @@ CREATE TABLE `records` (
   `product_id` int(11) DEFAULT NULL,
   `record_type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `records`
+--
+
+INSERT INTO `records` (`record_id`, `date`, `admin_id`, `product_id`, `record_type`) VALUES
+(1, '2024-05-30', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -267,6 +299,14 @@ CREATE TABLE `reseller` (
   `address` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `reseller`
+--
+
+INSERT INTO `reseller` (`reseller_id`, `name`, `email`, `phone_number`, `active_status`, `join_date`, `address`) VALUES
+(1, 'mary cruz', 'mary@gmail.com', 2147483647, 1, '2024-05-30', 1),
+(2, 'anna', 'anna@gmail.com', 2147483647, 1, '2024-05-30', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -298,8 +338,9 @@ ALTER TABLE `active_status`
 
 --
 -- Indexes for table `address`
+--
 ALTER TABLE `address`
-  MODIFY COLUMN `address_id` INT AUTO_INCREMENT PRIMARY KEY,
+  ADD PRIMARY KEY (`address_id`),
   ADD KEY `region_id` (`region_id`);
 
 --
@@ -391,6 +432,12 @@ ALTER TABLE `transaction`
 --
 
 --
+-- AUTO_INCREMENT for table `address`
+--
+ALTER TABLE `address`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
@@ -400,7 +447,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `manages`
 --
 ALTER TABLE `manages`
-  MODIFY `manages_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `manages_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -412,19 +459,19 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reseller`
 --
 ALTER TABLE `reseller`
-  MODIFY `reseller_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reseller_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
