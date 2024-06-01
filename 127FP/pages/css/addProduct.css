@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: white;
+}
+body {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+header {
+  background-color: #000000;
+  height: 10%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+header img {
+  padding-left: 30px;
+  width: 70px;
+}
+
+main {
+  height: 80%;
+  padding-top: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.backBtnWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.backBtn {
+  width: 40px;
+}
+
+form {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.submit {
+  margin-top: 20px;
+  width: 150px;
+  background-color: black;
+  color: white;
+  font-size: large;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  font-size: larger;
+  background-color: gray;
+}
+
+.priceWrapper {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.priceWrapper input {
+  width: 50%;
+}
+
+.productImg {
+  background-color: white;
+  border-radius: 0;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}

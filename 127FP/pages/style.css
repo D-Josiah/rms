@@ -1,0 +1,176 @@
+body {
+    background-color: white;
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+/* header{
+    background-color: #000000;
+} */
+
+footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+}
+
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.header-content .persons {
+    width: 50px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 24px; /* Adjust the font size as needed */
+    /* color: #ffffff; */
+    color: #000000;
+
+}
+
+
+/* Navigation bar */
+nav {
+    background-color: #f8f9fa;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul li {
+    flex: 1;
+    text-align: center;
+}
+
+nav ul li a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* Search bar and add */
+.search-filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.search-filter-container input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    width: 1200px;
+}
+
+.search-filter-container select,
+.search-filter-container button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-filter-container button.add-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    font-weight: bold;
+}
+
+.search-filter-container button.apply-button {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    border: none;
+}
+
+.search-filter-container button.add-button:hover,
+.search-filter-container button.apply-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* Form styles */
+
+.reseller-icon img {
+    width: 80px;
+    height: auto;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.form-columns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-columns div {
+    flex: 1;
+    margin-right: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
